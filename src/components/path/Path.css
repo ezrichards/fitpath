@@ -9,4 +9,12 @@
     justify-content: center;
     box-shadow: 0px 5px #3EA400;
     margin-bottom: 10px;
+
+
 }
+
+.node :active {
+    /* box-shadow: 0px 5px #368d00; */
+    transform: translateY(5px);
+}
+
