@@ -7,7 +7,6 @@ import "@mantine/core/styles.css";
 import "./App.css";
 
 export default function App() {
-  // TODO retrieve these from backend
   const currentPath = "Abs";
   const exercises = [
     {
@@ -40,13 +39,9 @@ export default function App() {
         <main>
           <PathHeader name={currentPath} />
           {exercises.map((exercise, index) => (
-            <>
-              {/* <ExerciseModal exercise={exercise} /> */}
-              <ExerciseNode exercise={exercise} index={index} />
-            </>
+            <ExerciseNode exercise={exercise} index={index} />
           ))}
         </main>
-
         <Leaderboard />
       </div>
     </MantineProvider>
