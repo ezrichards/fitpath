@@ -30,7 +30,15 @@ export default function App() {
       id: 4,
       name: "Russian Twists",
       completed: false
-    }
+    },
+    // { id: 555, name: "sdsjkdkjsa", completed: false },
+    // { id: 55, name: "sdsjkdkjsa", completed: false },
+    // { id: 6426455, name: "sdsjkdkjsa", completed: false },
+    // { id: 553155, name: "sdsjkdkjsa", completed: false },
+    // { id: 55334155, name: "sdsjkdkjsa", completed: false },
+    // { id: 555135, name: "sdsjkdkjsa", completed: false },
+    // { id: 5531415, name: "sdsjkdkjsa", completed: false },
+    // { id: 55135, name: "sdsjkdkjsa", completed: false },
   ]
 
   return (
@@ -42,11 +50,8 @@ export default function App() {
 
           <PathHeader name={currentPath} />
 
-          {exercises.map(exercise => (
-            // <div className="node">
-            //   <FaStar size={50} fill='white' />
-            // </div>
-            <ExerciseNode exercise={exercise} />
+          {exercises.map((exercise, index) => (
+            <ExerciseNode exercise={exercise} index={index} />
           ))}
         </main>
         
