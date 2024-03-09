@@ -8,13 +8,15 @@ function App() {
   return (
     <MantineProvider>
       <div className="app">
-        <Header></Header>
-
-        <ExerciseModal></ExerciseModal>
-          
         <header>
           <h1>Mobile-First React Layout</h1>
         </header>
+
+        
+        {/* <Header></Header> */}
+
+        {/* <ExerciseModal></ExerciseModal> */}
+          
         <main>
           <section>
             <h2>Welcome to our website!</h2>
@@ -29,9 +31,9 @@ function App() {
             </ul>
           </section>
         </main>
-        <footer>
+        <div className="leaderboard">
           <p>&copy; 2024 Your Company</p>
-        </footer>
+        </div>
       </div>
     </MantineProvider>
   );
