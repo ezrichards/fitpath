@@ -1,9 +1,20 @@
-/* Page Elements */
 .logo {
   display: inline-block;
   margin-right: 50%;
   font-size: 24px;
 }
+
+.pathHeader {
+  background-color: #5158BB;
+  border-radius: 25px;
+  flex-direction: row;
+  padding: 5px;
+  color: white;
+  font-size: 18px;
+  text-align: center;
+  font-weight: bold;
+}
+
 
 /* Page Constraints */
 body {
@@ -13,11 +24,11 @@ body {
 }
 
 .app {
-  max-width: 600px; /* Adjust as needed */
-  margin: 0 auto;
+  width: 100%;
 }
 
 main {
+  margin-top: 75px;
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -26,7 +37,8 @@ main {
 /* Mobile Stuff */
 @media (min-width: 768px) {
   .app {
-    max-width: 800px; /* Adjust as needed for larger screens */
+    max-width: 800px;
+    margin: 0 auto;
   }
 
   main {

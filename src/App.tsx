@@ -1,77 +1,56 @@
-import Header from './components/header/Header';
-import ExerciseModal from './components/ExerciseModal';
-import '@mantine/core/styles.css';
-import './App.css';
 import { MantineProvider } from '@mantine/core';
+import Header from './components/header/Header';
 import Leaderboard from './components/leaderboard/Leaderboard';
+import ExerciseModal from './components/modal/ExerciseModal';
+// import '@mantine/core/styles.css';
+import './App.css';
 
 export default function App() {
+  let currentPath = "Abs"; // TODO retrieve this from backend
+  let exercises = [
+    {
+      id: 1,
+      name: "Bicycles",
+      completed: true
+    },
+    {
+      id: 2,
+      name: "Flutter Kicks",
+      completed: false
+    },
+    {
+      id: 3,
+      name: "Plank",
+      completed: false
+    },
+    {
+      id: 4,
+      name: "Russian Twists",
+      completed: false
+    }
+  ]
+
   return (
-    <MantineProvider>
+    // <MantineProvider>
       <div className="app">
         <Header />
-
-        {/* <ExerciseModal></ExerciseModal> */}
-          
         <main>
-          <section>
-            <h2>Welcome to our website!</h2>
-            <p>This is a mobile-first React layout example.</p>
-          </section>
-          <section>
-            <h2>Features</h2>
-            <ul>
-              <li>Responsive design</li>
-              <li>Flexbox for layout</li>
-              <li>Media queries for different screen sizes</li>
-            </ul>
-          </section>
+
+          {/* <ExerciseModal></ExerciseModal> */}
+
+          <div className="pathHeader">
+            <p>{currentPath}</p>
+          </div>
+
+          {exercises.map(exercise => (
+            <>
+              <p>{exercise.name}, completed: {String(exercise.completed)}</p>
+            </>
+          ))}
         </main>
         
         <Leaderboard />
       </div>
-    </MantineProvider>
+    // </MantineProvider> 
   );
 }
-
-
-// import { Card, Image, Text, Badge, Button, Group } from '@mantine/core';
-// import { MantineProvider } from '@mantine/core';
-// import Header from './components/Header';
-// import ExerciseModal from './components/ExerciseModal';
-
-// export default function App() {
-
-//   function Demo() {
-//     return (
-//       <>
-//         <Header></Header>
-
-//         <ExerciseModal></ExerciseModal>
-        
-//         <Card shadow="sm" padding="lg" radius="md" withBorder>
-//           <Card.Section>
-//             <Image
-//               src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
-//               height={160}
-//               alt="Norway"
-//             />
-//           </Card.Section>
-    
-//           <Group justify="space-between" mt="md" mb="xs">
-//             <Text fw={500}>Norway Fjord Adventures</Text>
-//             <Badge color="pink">On Sale</Badge>
-//           </Group>
-    
-//           <Text size="sm" c="dimmed">
-//             With Fjord Tours you can explore more of the magical fjord landscapes with tours and
-//             activities on and around the fjords of Norway
-//           </Text>
-    
-//           <Button color="blue" fullWidth mt="md" radius="md">
-//             Book classic tour now
-//           </Button>
-//         </Card>
-//       </>
-//     );
-//   }
