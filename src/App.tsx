@@ -1,16 +1,15 @@
 import { MantineProvider } from '@mantine/core';
 import Header from './components/header/Header';
 import Leaderboard from './components/leaderboard/Leaderboard';
-// import ExerciseModal from './components/modal/ExerciseModal';
-import '@mantine/core/styles.css';
-import './App.css';
 import ExerciseNode from './components/path/ExerciseNode';
 import PathHeader from './components/path/PathHeader';
+import '@mantine/core/styles.css';
+import './App.css';
 
 export default function App() {
   // TODO retrieve these from backend
-  let currentPath = "Abs";
-  let exercises = [
+  const currentPath = "Abs";
+  const exercises = [
     {
       id: 1,
       name: "Bicycles",
@@ -46,17 +45,17 @@ export default function App() {
       <div className="app">
         <Header />
         <main>
-          {/* <ExerciseModal></ExerciseModal> */}
-
           <PathHeader name={currentPath} />
-
           {exercises.map((exercise, index) => (
-            <ExerciseNode exercise={exercise} index={index} />
+            <>
+              {/* <ExerciseModal exercise={exercise} /> */}
+              <ExerciseNode exercise={exercise} index={index} />
+            </>
           ))}
         </main>
-        
+
         <Leaderboard />
       </div>
-    </MantineProvider> 
+    </MantineProvider>
   );
 }

@@ -1,13 +1,6 @@
-.pathHeader {
-  background-color: #5158BB;
-  border-radius: 25px;
-  flex-direction: row;
-  padding: 5px;
-  color: white;
-  font-size: 18px;
-  text-align: center;
-  font-weight: bold;
-  margin-bottom: 20px;
+/* Exercise Modal */
+.modal {
+  /* TODO */
 }
 
 /* Page Constraints */

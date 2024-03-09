@@ -15,3 +15,29 @@
     transform: translateY(5px);
 }
 
+.pathHeader {
+    background-color: #5158BB;
+    border-radius: 25px;
+    flex-direction: row;
+    padding: 5px;
+    color: white;
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.modalButton {
+    background-color: #5158BB;
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.modalHeader {
+    color: #5158BB;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
