@@ -3,12 +3,13 @@ import ExerciseModal from './components/ExerciseModal';
 import '@mantine/core/styles.css';
 import './App.css';
 import { MantineProvider } from '@mantine/core';
+import Leaderboard from './components/leaderboard/Leaderboard';
 
 export default function App() {
   return (
     <MantineProvider>
       <div className="app">
-        <Header></Header>
+        <Header />
 
         {/* <ExerciseModal></ExerciseModal> */}
           
@@ -26,9 +27,8 @@ export default function App() {
             </ul>
           </section>
         </main>
-        <div className="leaderboard">
-          <p>&copy; 2024 Your Company</p>
-        </div>
+        
+        <Leaderboard />
       </div>
     </MantineProvider>
   );
@@ -75,28 +75,3 @@ export default function App() {
 //       </>
 //     );
 //   }
-  
-//   return <MantineProvider>
-//     <Demo/>
-//     {/* <>
-//       <div>
-//         <a href="https://vitejs.dev" target="_blank">
-//           <img className="logo" alt="Vite logo" />
-//         </a>
-//         <a href="https://react.dev" target="_blank">
-//           <img className="logo react" alt="React logo" />
-//         </a>
-//       </div>
-//       <h1>Vite + React</h1>
-//       <div className="card">
-//         <p>
-//           Edit <code>src/App.tsx</code> and save to test HMR
-//         </p>
-//       </div>
-//       <p className="read-the-docs">
-//         Click on the Vite and React logos to learn more
-//       </p>
-//     </> */}
-//   </MantineProvider>;
-// }
-

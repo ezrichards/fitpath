@@ -1,14 +1,4 @@
 /* Page Elements */
-.leaderboard {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  padding: 10px;
-  background-color: #333;
-  color: white;
-  text-align: center;
-}
-
 .logo {
   display: inline-block;
   margin-right: 50%;
