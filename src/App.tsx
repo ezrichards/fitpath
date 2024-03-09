@@ -1,9 +1,10 @@
-import { MantineProvider } from '@mantine/core';
+// import { MantineProvider } from '@mantine/core';
 import Header from './components/header/Header';
 import Leaderboard from './components/leaderboard/Leaderboard';
-import ExerciseModal from './components/modal/ExerciseModal';
+// import ExerciseModal from './components/modal/ExerciseModal';
 // import '@mantine/core/styles.css';
 import './App.css';
+import { FaStar } from 'react-icons/fa';
 
 export default function App() {
   let currentPath = "Abs"; // TODO retrieve this from backend
@@ -43,9 +44,9 @@ export default function App() {
           </div>
 
           {exercises.map(exercise => (
-            <>
-              <p>{exercise.name}, completed: {String(exercise.completed)}</p>
-            </>
+            <div className="node">
+              <FaStar size={50} fill='white' />
+            </div>
           ))}
         </main>
         
