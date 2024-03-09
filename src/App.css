@@ -35,3 +35,19 @@ p {
     flex-direction: row;
   }
 }
+
+@media (min-width: 769px) {
+  body::before {
+    content: "This app is optimized for mobile. Please view on a mobile device.";
+    display: block;
+    background-color: #ffcccc; /* Light red background color for warning */
+    color: #cc0000; /* Dark red text color for warning */
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .app {
+    display: none;
+  }
+}
