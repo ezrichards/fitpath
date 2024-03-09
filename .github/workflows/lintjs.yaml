@@ -1,4 +1,4 @@
-name: Lint-Node
+name: Lint Node
 
 on:
   push:
@@ -16,13 +16,10 @@ jobs:
         with:
           node-version: 18
       - name: clean install
-        working-directory: ./frontend/
         run: npm ci
       - name: run eslint
-        working-directory: ./frontend/
         run: |
-          npx eslint App.tsx src
+          npx eslint src
       - name: run prettier
-        working-directory: ./frontend/
         run: |
-          npx prettier --check App.tsx src
+          npx prettier --check src

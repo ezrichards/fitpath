@@ -1,14 +1,14 @@
 .leaderboard {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    padding: 20px;
-    background-color: #fff;
-    text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+  background-color: #fff;
+  text-align: center;
 }
 
 .leaderboard-text {
-    display: flex;
-    justify-content: space-between;
-    max-width: 90%;
+  display: flex;
+  justify-content: space-between;
+  max-width: 90%;
 }

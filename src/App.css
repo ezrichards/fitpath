@@ -1,13 +1,8 @@
-/* Exercise Modal */
-.modal {
-  /* TODO */
-}
-
 /* Page Constraints */
 body {
   margin: 0;
   padding: 0;
-  background-color: #EDEDED;
+  background-color: #ededed;
 }
 
 .app {
@@ -22,6 +17,10 @@ main {
 }
 
 h1 {
+  margin: 0;
+}
+
+p {
   margin: 0;
 }
 

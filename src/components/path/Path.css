@@ -1,43 +1,43 @@
 .node {
-    background-color: #51D103;
-    border-radius: 75px;
-    color: white;
-    width: 90px;
-    height: 90px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0px 5px #3EA400;
-    margin-bottom: 10px;
+  background-color: #51d103;
+  border-radius: 75px;
+  color: white;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 5px #3ea400;
+  margin-bottom: 10px;
 }
 
 .node :active {
-    transform: translateY(5px);
+  transform: translateY(5px);
 }
 
 .pathHeader {
-    background-color: #5158BB;
-    border-radius: 25px;
-    flex-direction: row;
-    padding: 5px;
-    color: white;
-    font-size: 18px;
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 20px;
+  background-color: #5158bb;
+  border-radius: 15px;
+  flex-direction: row;
+  padding: 10px;
+  color: white;
+  font-size: 24px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
 .modalButton {
-    background-color: #5158BB;
-    color: white;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
+  background-color: #5158bb;
+  color: white;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 
 .modalHeader {
-    color: #5158BB;
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
+  color: #5158bb;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
 }
