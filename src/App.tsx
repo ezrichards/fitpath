@@ -1,13 +1,15 @@
-// import { MantineProvider } from '@mantine/core';
+import { MantineProvider } from '@mantine/core';
 import Header from './components/header/Header';
 import Leaderboard from './components/leaderboard/Leaderboard';
 // import ExerciseModal from './components/modal/ExerciseModal';
-// import '@mantine/core/styles.css';
+import '@mantine/core/styles.css';
 import './App.css';
-import { FaStar } from 'react-icons/fa';
+import ExerciseNode from './components/path/ExerciseNode';
+import PathHeader from './components/path/PathHeader';
 
 export default function App() {
-  let currentPath = "Abs"; // TODO retrieve this from backend
+  // TODO retrieve these from backend
+  let currentPath = "Abs";
   let exercises = [
     {
       id: 1,
@@ -32,26 +34,24 @@ export default function App() {
   ]
 
   return (
-    // <MantineProvider>
+    <MantineProvider>
       <div className="app">
         <Header />
         <main>
-
           {/* <ExerciseModal></ExerciseModal> */}
 
-          <div className="pathHeader">
-            <p>{currentPath}</p>
-          </div>
+          <PathHeader name={currentPath} />
 
           {exercises.map(exercise => (
-            <div className="node">
-              <FaStar size={50} fill='white' />
-            </div>
+            // <div className="node">
+            //   <FaStar size={50} fill='white' />
+            // </div>
+            <ExerciseNode />
           ))}
         </main>
         
         <Leaderboard />
       </div>
-    // </MantineProvider> 
+    </MantineProvider> 
   );
 }
