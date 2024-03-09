@@ -1,13 +1,4 @@
-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background-color: #333;
-  color: white;
-  text-align: center;
-  padding: 10px;
-}
-
+/* Page Elements */
 .leaderboard {
   position: fixed;
   bottom: 0;
@@ -18,11 +9,17 @@ header {
   text-align: center;
 }
 
+.logo {
+  display: inline-block;
+  margin-right: 50%;
+  font-size: 24px;
+}
 
+/* Page Constraints */
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Arial', sans-serif;
+  background-color: #EDEDED;
 }
 
 .app {
@@ -36,15 +33,7 @@ main {
   padding: 20px;
 }
 
-section {
-  margin-bottom: 20px;
-}
-
-footer {
-  text-align: center;
-  color: #555;
-}
-
+/* Mobile Stuff */
 @media (min-width: 768px) {
   .app {
     max-width: 800px; /* Adjust as needed for larger screens */
@@ -53,54 +42,4 @@ footer {
   main {
     flex-direction: row;
   }
-
-  section {
-    flex: 1;
-    margin-right: 20px;
-    margin-bottom: 0;
-  }
 }
-
-
-/* #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-} */

@@ -1,19 +1,14 @@
-import Header from './components/Header';
+import Header from './components/header/Header';
 import ExerciseModal from './components/ExerciseModal';
 import '@mantine/core/styles.css';
 import './App.css';
 import { MantineProvider } from '@mantine/core';
 
-function App() {
+export default function App() {
   return (
     <MantineProvider>
       <div className="app">
-        <header>
-          <h1>Mobile-First React Layout</h1>
-        </header>
-
-        
-        {/* <Header></Header> */}
+        <Header></Header>
 
         {/* <ExerciseModal></ExerciseModal> */}
           
@@ -38,9 +33,6 @@ function App() {
     </MantineProvider>
   );
 }
-
-export default App;
-
 
 
 // import { Card, Image, Text, Badge, Button, Group } from '@mantine/core';
