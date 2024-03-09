@@ -1,13 +1,4 @@
-# techstartups
-
-## Backend Setup
-
-Navigate to the backend directory, install dependencies, and run as normal with npm.
-```
-cd backend
-npm install
-node app.js
-```
+# Fitpath
 
 ## Frontend Setup
 
