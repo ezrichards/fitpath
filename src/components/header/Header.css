@@ -4,5 +4,16 @@ header {
     width: 100%;
     background-color: #FFFFFF;
     text-align: center;
-    padding: 5px;
+    font-size: 20px;
+    padding: 20px;
+}
+
+.logo {
+    display: inline-block;
+    margin-right: 40%;
+    font-size: 24px;
+}
+
+#streak {
+    margin-right: 5%;
 }
