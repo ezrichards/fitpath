@@ -22,6 +22,13 @@ const ExerciseNode = (props: { exercise: Exercise; index: number }) => {
         }}
       >
         <h1 className="modalHeader">{props.exercise.name}</h1>
+
+        <img className="image" src={"https://uxftterxgsflxsabwhaw.supabase.co/storage/v1/object/public/gifs/" + props.exercise.id + ".gif"}></img>
+
+        <p className="description">{props.exercise.description}</p>
+
+        <p className="description">{props.exercise.recommendations}</p>
+
         <button className="modalButton" onClick={close}>
           Done
         </button>

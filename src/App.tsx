@@ -13,22 +13,29 @@ export default function App() {
       id: 1,
       name: "Bicycles",
       completed: true,
-      description: "An exercise",
+      description: "Exhale and lift the weights out to the sides until your arms are parallel to the ground. Keep a slight bend in your elbows throughout the movement.",
+      recommendations: "Start with 10lb dumbbells. Do 12x reps or until failure. 3 sets per workout."
     },
     {
       id: 2,
       name: "Flutter Kicks",
       completed: false,
+      description: "An exercise",
+      recommendations: "Lift"
     },
     {
       id: 3,
       name: "Plank",
       completed: false,
+      description: "An exercise",
+      recommendations: "Lift"
     },
     {
       id: 4,
       name: "Russian Twists",
       completed: false,
+      description: "An exercise",
+      recommendations: "Lift"
     },
   ];
 
