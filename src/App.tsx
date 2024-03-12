@@ -11,7 +11,7 @@ import "@mantine/core/styles.css";
 import "./App.css";
 import 'dotenv/config'
 
-const supabase = createClient('https://<project>.supabase.co', process.env.SUPABASE_KEY)
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY)
 
 export default function App() {
   const currentPath = "Abs";
