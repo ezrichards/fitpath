@@ -26,9 +26,10 @@ const ExerciseNode = (props: { exercise: Exercise; index: number }) => {
         <img
           className="image"
           src={
-            "https://uxftterxgsflxsabwhaw.supabase.co/storage/v1/object/public/gifs/" +
-            props.exercise.id +
-            ".gif"
+            props.exercise.gif
+            // "https://uxftterxgsflxsabwhaw.supabase.co/storage/v1/object/public/gifs/" +
+            // props.exercise.id +
+            // ".gif"
           }
         ></img>
 

@@ -4,4 +4,6 @@ export default interface Exercise {
   completed: boolean;
   description: string;
   recommendations: string;
+  gif: string;
+  unit: string;
 }
