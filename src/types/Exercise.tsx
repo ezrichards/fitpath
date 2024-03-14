@@ -1,4 +1,4 @@
-export default interface Exercise {
+export interface Exercise {
   id: number;
   name: string;
   completed: boolean;
@@ -6,4 +6,10 @@ export default interface Exercise {
   recommendations: string;
   gif: string;
   unit: string;
+}
+
+export interface Unit {
+  name: string;
+  exercises: Exercise[];
+  [key: string]: any;
 }

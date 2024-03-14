@@ -1,6 +1,6 @@
 import { FaStar } from "react-icons/fa";
 import "./Path.css";
-import Exercise from "../../types/Exercise";
+import { Exercise } from "../../types/Exercise";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal } from "@mantine/core";
 
@@ -23,15 +23,7 @@ const ExerciseNode = (props: { exercise: Exercise; index: number }) => {
       >
         <h1 className="modalHeader">{props.exercise.name}</h1>
 
-        <img
-          className="image"
-          src={
-            props.exercise.gif
-            // "https://uxftterxgsflxsabwhaw.supabase.co/storage/v1/object/public/gifs/" +
-            // props.exercise.id +
-            // ".gif"
-          }
-        ></img>
+        <img className="image" src={props.exercise.gif}></img>
 
         <p className="description">{props.exercise.description}</p>
 
