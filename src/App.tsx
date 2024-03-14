@@ -10,22 +10,60 @@ import PathHeader from "./components/path/PathHeader";
 import "@mantine/core/styles.css";
 import "./App.css";
 import { Database } from "./types/database.types";
-import { Exercise, Unit } from "./types/Exercise";
+import { Exercise, ExerciseCompletion, Unit } from "./types/exercise.types";
 
-const supabase = createClient<Database>(
+export const supabase = createClient<Database>(
   import.meta.env.VITE_SUPABASE_URL as string,
   import.meta.env.VITE_SUPABASE_KEY as string,
 );
 
+export const completeExercise = async (
+  exercise_id: number,
+  user_id: string,
+) => {
+  console.log("updating exercise ", exercise_id, " for user ", user_id);
+  const { error } = await supabase
+    .from("user_exercise_xref")
+    .upsert({ complete: true })
+    .eq("user_id", user_id)
+    .eq("exercise_id", exercise_id);
+
+  if (error) {
+    console.log("ERROR WHILE UPDATING BACKEND");
+  }
+};
+
 const App = () => {
   const [session, setSession] = useState<Session | null>();
+
   // const [exercises, setExercises] = useState<Exercise[] | null>([]);
   const [error, setError] = useState<string | null>(null);
   const [units, setUnits] = useState<Unit | null>(null);
   // const currentPath = "Abs";
+  const [firstEffectCompleted, setFirstEffectCompleted] = useState(false);
+
+  const [completionData, setCompletionData] = useState<
+    ExerciseCompletion[] | null
+  >(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      setSession(session);
+      setFirstEffectCompleted(true);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      setFirstEffectCompleted(true);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    const fetchExerciseData = async () => {
       try {
         const { data, error } = await supabase
           .from("exercise")
@@ -45,26 +83,50 @@ const App = () => {
           tempUnits[exercise.unit].push(exercise);
         });
         setUnits(tempUnits);
+
+        //=================
+        const { data: completionData, error: completionError } = await supabase
+          .from("user_exercise_xref")
+          .select()
+          .eq("user_id", String(session?.user.id));
+
+        if (completionError) {
+          console.log("error in completion data");
+        }
+
+        setCompletionData(completionData as ExerciseCompletion[]);
+        // console.log(completionData)
       } catch (error: any) {
         setError(error);
       }
     };
-    fetchData();
-  }, []);
+
+    if (firstEffectCompleted) {
+      fetchExerciseData();
+    }
+  }, [firstEffectCompleted, session]);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
+    const fetchData = async () => {
+      if (units) {
+        Object.keys(units).map((key) => {
+          for (let exercise in units[key]) {
+            for (let completedExercise in completionData) {
+              if (
+                units[key][exercise].id ===
+                  completionData[completedExercise].exercise_id &&
+                completionData[completedExercise].complete
+              ) {
+                // console.log("completed:", completionData[completedExercise])
+                units[key][exercise].completed = true;
+              }
+            }
+          }
+        });
+      }
+    };
+    fetchData();
+  }, [units, completionData]);
 
   if (!session) {
     return (

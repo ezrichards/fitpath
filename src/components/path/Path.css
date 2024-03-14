@@ -11,6 +11,19 @@
   margin-bottom: 10px;
 }
 
+.completedNode {
+  background-color: #ffd700;
+  border-radius: 75px;
+  color: white;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 5px #c28306;
+  margin-bottom: 10px;
+}
+
 .node :active {
   transform: translateY(5px);
 }

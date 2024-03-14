@@ -13,3 +13,10 @@ export interface Unit {
   exercises: Exercise[];
   [key: string]: any;
 }
+
+export interface ExerciseCompletion {
+  user_id: string;
+  complete: boolean;
+  id: number;
+  exercise_id: number;
+}
