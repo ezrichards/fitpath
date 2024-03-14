@@ -108,14 +108,13 @@ const App = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (units) {
+      if (units && completionData) {
         Object.keys(units).map((key) => {
           for (let exercise in units[key]) {
-            for (let completedExercise in completionData) {
+            for (let completedExercise of completionData) {
               if (
-                units[key][exercise].id ===
-                  completionData[completedExercise].exercise_id &&
-                completionData[completedExercise].complete
+                units[key][exercise].id === completedExercise.exercise_id &&
+                completedExercise.complete
               ) {
                 // console.log("completed:", completionData[completedExercise])
                 units[key][exercise].completed = true;
