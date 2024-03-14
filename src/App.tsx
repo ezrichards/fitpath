@@ -37,7 +37,7 @@ const App = () => {
           console.log("ERROR WHILE QUERYING BACKEND");
         }
 
-        const tempUnits: Unit = {};
+        const tempUnits: Unit = {} as Unit;
         data?.forEach((exercise) => {
           if (!tempUnits[exercise.unit]) {
             tempUnits[exercise.unit] = [];
