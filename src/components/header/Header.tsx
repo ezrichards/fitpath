@@ -1,6 +1,7 @@
 import "./Header.css";
 
-const Header = (props: { streak: number }) => {
+const Header = () => {
+// const Header = (props: { streak: number }) => {
   return (
     <header>
       <h1>Fitpath</h1>

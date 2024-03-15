@@ -10,3 +10,6 @@ export default function Leaderboard() {
     </div>
   );
 }
+
+// TODO query supabase here
+// state name, exercise, time -- or just state LeaderboardExercise type

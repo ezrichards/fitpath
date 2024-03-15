@@ -4,7 +4,7 @@ import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { MantineProvider } from "@mantine/core";
 import Header from "./components/header/Header";
-import Leaderboard from "./components/leaderboard/Leaderboard";
+// import Leaderboard from "./components/leaderboard/Leaderboard";
 import ExerciseNode from "./components/path/ExerciseNode";
 import PathHeader from "./components/path/PathHeader";
 import "@mantine/core/styles.css";
@@ -148,7 +148,8 @@ const App = () => {
     return (
       <MantineProvider>
         <div className="app">
-          <Header streak={1} />
+          <Header />
+          {/* <Header streak={1} /> */}
           <main>
             {units &&
               Object.keys(units).map((key) => (
