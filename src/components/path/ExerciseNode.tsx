@@ -4,14 +4,20 @@ import { Exercise } from "../../types/exercise.types";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal } from "@mantine/core";
 import { completeExercise, supabase } from "../../App";
+import { useEffect, useState } from "react";
 
 const ExerciseNode = (props: { exercise: Exercise; index: number }) => {
   const [opened, { open, close }] = useDisclosure(false);
+  const [completed, setCompleted] = useState(false);
   const baseMargin = 50;
   const marginLeft =
     (props.index % 6 <= 2 ? props.index % 6 : 6 - (props.index % 6)) *
       baseMargin +
     50;
+
+  useEffect(() => {
+    setCompleted(props.exercise.completed);
+  })
 
   const submitExercise = async () => {
     close();
@@ -20,6 +26,8 @@ const ExerciseNode = (props: { exercise: Exercise; index: number }) => {
     if (session.data.session) {
       completeExercise(props.exercise.id, session?.data.session.user.id);
     }
+
+    setCompleted(true);
     props.exercise.completed = true;
   };
 
@@ -69,11 +77,11 @@ const ExerciseNode = (props: { exercise: Exercise; index: number }) => {
         style={{
           marginLeft: `${marginLeft}px`,
         }}
-        className={props.exercise.completed ? "completedNode" : "node"}
+        className={completed ? "completedNode" : "node"}
         id={props.exercise.name}
         onClick={open}
       >
-        {props.exercise.completed ? (
+        {completed ? (
           <FaCheck size={50} fill="white" />
         ) : (
           <FaStar size={50} fill="white" />

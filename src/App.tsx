@@ -22,15 +22,20 @@ export const completeExercise = async (
   user_id: string,
 ) => {
   console.log("updating exercise ", exercise_id, " for user ", user_id);
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("user_exercise_xref")
-    .upsert({ complete: true })
+    .update({ complete: true })
     .eq("user_id", user_id)
-    .eq("exercise_id", exercise_id);
+    .eq("exercise_id", exercise_id)
+    .select();
+
+  console.log(data)
 
   if (error) {
+    console.log(error)
     console.log("ERROR WHILE UPDATING BACKEND");
   }
+
 };
 
 const App = () => {
@@ -143,7 +148,7 @@ const App = () => {
     return (
       <MantineProvider>
         <div className="app">
-          <Header />
+          <Header streak={1} />
           <main>
             {units &&
               Object.keys(units).map((key) => (
@@ -159,7 +164,7 @@ const App = () => {
                 </>
               ))}
           </main>
-          <Leaderboard />
+          {/* <Leaderboard /> */}
         </div>
       </MantineProvider>
     );
