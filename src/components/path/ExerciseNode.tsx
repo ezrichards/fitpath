@@ -17,7 +17,7 @@ const ExerciseNode = (props: { exercise: Exercise; index: number }) => {
 
   useEffect(() => {
     setCompleted(props.exercise.completed);
-  })
+  }, [props.exercise.completed]);
 
   const submitExercise = async () => {
     close();

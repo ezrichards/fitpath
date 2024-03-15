@@ -1,4 +1,6 @@
 export default interface User {
   id: string;
-  streak: number;
+  name: string;
+  streak_current: number;
+  streak_today: boolean;
 }

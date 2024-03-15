@@ -11,6 +11,7 @@ import "@mantine/core/styles.css";
 import "./App.css";
 import { Database } from "./types/database.types";
 import { Exercise, ExerciseCompletion, Unit } from "./types/exercise.types";
+import User from "./types/user.types";
 
 export const supabase = createClient<Database>(
   import.meta.env.VITE_SUPABASE_URL as string,
@@ -21,32 +22,23 @@ export const completeExercise = async (
   exercise_id: number,
   user_id: string,
 ) => {
-  console.log("updating exercise ", exercise_id, " for user ", user_id);
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("user_exercise_xref")
     .update({ complete: true })
     .eq("user_id", user_id)
-    .eq("exercise_id", exercise_id)
-    .select();
-
-  console.log(data)
+    .eq("exercise_id", exercise_id);
 
   if (error) {
-    console.log(error)
     console.log("ERROR WHILE UPDATING BACKEND");
   }
-
 };
 
 const App = () => {
   const [session, setSession] = useState<Session | null>();
-
-  // const [exercises, setExercises] = useState<Exercise[] | null>([]);
+  const [streak, setStreak] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
   const [units, setUnits] = useState<Unit | null>(null);
-  // const currentPath = "Abs";
   const [firstEffectCompleted, setFirstEffectCompleted] = useState(false);
-
   const [completionData, setCompletionData] = useState<
     ExerciseCompletion[] | null
   >(null);
@@ -74,7 +66,6 @@ const App = () => {
           .from("exercise")
           .select()
           .returns<Exercise[]>();
-        // setExercises(data);
 
         if (error) {
           console.log("ERROR WHILE QUERYING BACKEND");
@@ -89,7 +80,6 @@ const App = () => {
         });
         setUnits(tempUnits);
 
-        //=================
         const { data: completionData, error: completionError } = await supabase
           .from("user_exercise_xref")
           .select()
@@ -100,7 +90,20 @@ const App = () => {
         }
 
         setCompletionData(completionData as ExerciseCompletion[]);
-        // console.log(completionData)
+
+        const { data: userData, error: userError } = await supabase
+          .from("user")
+          .select()
+          .eq("id", String(session?.user.id))
+          .returns<User[]>();
+
+        if (userError) {
+          console.log("error in querying users!", userError);
+        }
+
+        if (userData) {
+          setStreak(userData[0].streak_current);
+        }
       } catch (error: any) {
         setError(error);
       }
@@ -115,13 +118,12 @@ const App = () => {
     const fetchData = async () => {
       if (units && completionData) {
         Object.keys(units).map((key) => {
-          for (let exercise in units[key]) {
-            for (let completedExercise of completionData) {
+          for (const exercise in units[key]) {
+            for (const completedExercise of completionData) {
               if (
                 units[key][exercise].id === completedExercise.exercise_id &&
                 completedExercise.complete
               ) {
-                // console.log("completed:", completionData[completedExercise])
                 units[key][exercise].completed = true;
               }
             }
@@ -148,22 +150,23 @@ const App = () => {
     return (
       <MantineProvider>
         <div className="app">
-          <Header />
-          {/* <Header streak={1} /> */}
+          <Header streak={streak} />
           <main>
             {units &&
-              Object.keys(units).sort().map((key) => (
-                <>
-                  <PathHeader key={key} name={key.replace("_", " ")} />
-                  {units[key].map((exercise: Exercise, index: number) => (
-                    <ExerciseNode
-                      key={exercise.id}
-                      exercise={exercise}
-                      index={index}
-                    />
-                  ))}
-                </>
-              ))}
+              Object.keys(units)
+                .sort()
+                .map((key) => (
+                  <>
+                    <PathHeader key={key} name={key.replace("_", " ")} />
+                    {units[key].map((exercise: Exercise, index: number) => (
+                      <ExerciseNode
+                        key={exercise.id}
+                        exercise={exercise}
+                        index={index}
+                      />
+                    ))}
+                  </>
+                ))}
           </main>
           {/* <Leaderboard /> */}
         </div>
