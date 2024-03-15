@@ -152,7 +152,7 @@ const App = () => {
           {/* <Header streak={1} /> */}
           <main>
             {units &&
-              Object.keys(units).map((key) => (
+              Object.keys(units).sort().map((key) => (
                 <>
                   <PathHeader key={key} name={key.replace("_", " ")} />
                   {units[key].map((exercise: Exercise, index: number) => (
