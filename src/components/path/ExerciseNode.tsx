@@ -1,10 +1,22 @@
 import { FaCheck, FaStar } from "react-icons/fa";
-import "./Path.css";
 import { Exercise } from "../../types/exercise.types";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal } from "@mantine/core";
-import { completeExercise, supabase } from "../../App";
+import { supabase } from "../../supabase";
 import { useEffect, useState } from "react";
+import "./Path.css";
+
+const completeExercise = async (exercise_id: number, user_id: string) => {
+  const { error } = await supabase
+    .from("user_exercise_xref")
+    .update({ complete: true })
+    .eq("user_id", user_id)
+    .eq("exercise_id", exercise_id);
+
+  if (error) {
+    console.log("ERROR WHILE UPDATING BACKEND");
+  }
+};
 
 const ExerciseNode = (props: { exercise: Exercise; index: number }) => {
   const [opened, { open, close }] = useDisclosure(false);

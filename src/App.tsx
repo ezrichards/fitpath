@@ -1,37 +1,17 @@
 import { useState, useEffect } from "react";
-import { Session, createClient } from "@supabase/supabase-js";
+import { Session } from "@supabase/supabase-js";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { MantineProvider } from "@mantine/core";
+import { Exercise, ExerciseCompletion, Unit } from "./types/exercise.types";
+import { supabase } from "./supabase";
+import User from "./types/user.types";
 import Header from "./components/header/Header";
-// import Leaderboard from "./components/leaderboard/Leaderboard";
+import Leaderboard from "./components/leaderboard/Leaderboard";
 import ExerciseNode from "./components/path/ExerciseNode";
 import PathHeader from "./components/path/PathHeader";
 import "@mantine/core/styles.css";
 import "./App.css";
-import { Database } from "./types/database.types";
-import { Exercise, ExerciseCompletion, Unit } from "./types/exercise.types";
-import User from "./types/user.types";
-
-export const supabase = createClient<Database>(
-  import.meta.env.VITE_SUPABASE_URL as string,
-  import.meta.env.VITE_SUPABASE_KEY as string,
-);
-
-export const completeExercise = async (
-  exercise_id: number,
-  user_id: string,
-) => {
-  const { error } = await supabase
-    .from("user_exercise_xref")
-    .update({ complete: true })
-    .eq("user_id", user_id)
-    .eq("exercise_id", exercise_id);
-
-  if (error) {
-    console.log("ERROR WHILE UPDATING BACKEND");
-  }
-};
 
 const App = () => {
   const [session, setSession] = useState<Session | null>();
@@ -168,7 +148,7 @@ const App = () => {
                   </>
                 ))}
           </main>
-          {/* <Leaderboard /> */}
+          <Leaderboard />
         </div>
       </MantineProvider>
     );
