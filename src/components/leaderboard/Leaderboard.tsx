@@ -8,11 +8,12 @@ export default function Leaderboard() {
   const [exercise, setExercise] = useState<string | null>(null);
   const [time, setTime] = useState<string | null>(null);
 
-  function convertToAmPm(timeString: string) { // gpt wrote this lol
+  function convertToAmPm(timeString: string) {
+    // gpt wrote this lol
     const time = new Date(`1970-01-01T${timeString}Z`);
     const hours = time.getHours();
     const minutes = time.getMinutes();
-    const amPm = hours >= 12 ? 'pm' : 'am';
+    const amPm = hours >= 12 ? "pm" : "am";
     const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
     const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
     return `${formattedHours}:${formattedMinutes}${amPm}`;
