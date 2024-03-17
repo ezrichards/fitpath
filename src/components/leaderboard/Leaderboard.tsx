@@ -8,6 +8,16 @@ export default function Leaderboard() {
   const [exercise, setExercise] = useState<string | null>(null);
   const [time, setTime] = useState<string | null>(null);
 
+  function convertToAmPm(timeString: string) { // gpt wrote this lol
+    const time = new Date(`1970-01-01T${timeString}Z`);
+    const hours = time.getHours();
+    const minutes = time.getMinutes();
+    const amPm = hours >= 12 ? 'pm' : 'am';
+    const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+    return `${formattedHours}:${formattedMinutes}${amPm}`;
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       const { data, error } = await supabase
@@ -35,7 +45,7 @@ export default function Leaderboard() {
           <strong>{name}</strong> completed <strong>{exercise}</strong>
         </span>
         <span id="timestamp">
-          <strong>{time}</strong>
+          <strong>{time ? convertToAmPm(time) : "00:00am"}</strong>
         </span>
       </div>
     </div>
