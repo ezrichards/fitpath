@@ -43,26 +43,6 @@ const ExerciseNode = (props: { exercise: Exercise; index: number }) => {
     props.exercise.completed = true;
   };
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const { data, error } = await supabase
-  //       .from("exercise")
-  //       .select()
-  //       .returns<Exercise[]>();
-  //       // setExercises(data);
-
-  //       if (error) {
-  //         console.log("ERROR WHILE QUERYING BACKEND");
-  //       }
-
-  //     } catch (error: any) {
-  //       setError(error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
-
   return (
     <>
       <Modal

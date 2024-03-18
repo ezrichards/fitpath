@@ -23,6 +23,43 @@ const App = () => {
     ExerciseCompletion[] | null
   >(null);
 
+  async function signUpNewUser(email: string, password: string) {
+    const { data, error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        emailRedirectTo: 'https://example.com/welcome',
+      },
+    })
+
+    if(error) {
+      console.log("error while signing up user")
+    }
+
+    console.log('user signed up:', data)
+  }
+
+  async function signInWithEmail(email: string, password: string) {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    })
+
+    if(error) {
+      console.log('error while signing in user')
+    }
+
+    console.log('user signed in: ', data)
+  }
+
+  async function signOut() {
+    const { error } = await supabase.auth.signOut()
+
+    if(error) {
+      console.log('error while signing out user')
+    }
+  }
+
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSession(session);
