@@ -9,14 +9,36 @@ export default function Leaderboard() {
   const [time, setTime] = useState<string | null>(null);
 
   function convertToAmPm(timeString: string) {
-    // gpt wrote this lol
-    const time = new Date(`1970-01-01T${timeString}Z`);
-    const hours = time.getHours();
-    const minutes = time.getMinutes();
-    const amPm = hours >= 12 ? "pm" : "am";
-    const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
-    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-    return `${formattedHours}:${formattedMinutes}${amPm}`;
+    // gpt wrote this :)
+    // Split the time string and extract hours, minutes, and seconds
+    const [hoursStr, minutesStr, secondsStr] = timeString.split(":");
+    const hours = parseInt(hoursStr);
+    const minutes = parseInt(minutesStr);
+    const seconds = parseInt(secondsStr);
+
+    // Create a Date object with the given time in UTC
+    const timeUTC = new Date(Date.UTC(0, 0, 0, hours, minutes, seconds));
+
+    // Get the UTC offset in milliseconds for the current date
+    const utcOffset = timeUTC.getTimezoneOffset() * 60000;
+
+    // Denver is UTC-7 (or UTC-6 during daylight saving time)
+    const denverOffset = -7 * 60 * 60 * 1000; // Standard offset for Denver
+    const isDST = new Date().getTimezoneOffset() < timeUTC.getTimezoneOffset();
+    const denverTime = new Date(
+      timeUTC.getTime() +
+        utcOffset +
+        (isDST ? 1 : 0) * 60 * 60 * 1000 +
+        denverOffset,
+    );
+
+    // Format the time to AM/PM format
+    const options: Intl.DateTimeFormatOptions = {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    };
+    return denverTime.toLocaleString("en-US", options);
   }
 
   useEffect(() => {
