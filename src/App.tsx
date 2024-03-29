@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { Session } from "@supabase/supabase-js";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
@@ -23,13 +23,35 @@ const App = () => {
     ExerciseCompletion[] | null
   >(null);
 
+  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
+    event.preventDefault(); // Prevents the default form submission
+  
+    // Retrieve form data
+    const emailInput = document.getElementById('email') as HTMLInputElement;
+    const passwordInput = document.getElementById('password') as HTMLInputElement;
+    
+    // Check if inputs are not null (optional)
+    if (emailInput && passwordInput) {
+      const email: string = emailInput.value;
+      const password: string = passwordInput.value;
+  
+      // Perform any processing you need here, such as validation or sending data to a server
+  
+      // Example: Output the values to console
+      console.log('Email:', email);
+      console.log('Password:', password);
+  
+      // Optionally, you can redirect the user or perform other actions
+    }
+  }  
+
   async function signUpNewUser(email: string, password: string) {
     const { data, error } = await supabase.auth.signUp({
       email: email,
       password: password,
-      options: {
-        emailRedirectTo: 'https://example.com/welcome',
-      },
+      // options: {
+      //   emailRedirectTo: 'https://example.com/welcome',
+      // },
     })
 
     if(error) {
@@ -153,11 +175,22 @@ const App = () => {
 
   if (!session) {
     return (
-      <Auth
-        supabaseClient={supabase}
-        appearance={{ theme: ThemeSupa }}
-        providers={[]}
-      />
+      // <Auth
+      //   supabaseClient={supabase}
+      //   appearance={{ theme: ThemeSupa }}
+      //   providers={[]}
+      // />
+
+      <>
+        <h1>Login</h1>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="email">Email:</label>
+          <input type="text" id="email" name="email" /><br/><br/>
+          <label htmlFor="password">Password:</label>
+          <input type="text" id="password" name="password" /><br/><br/>
+          <input type="submit" value="Submit" />
+        </form>
+      </>
     );
   } else {
     if (error) {
