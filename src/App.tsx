@@ -1,4 +1,4 @@
-import { useState, useEffect, FormEvent } from "react";
+import { useState, useEffect } from "react";
 import { Session } from "@supabase/supabase-js";
 import { MantineProvider } from "@mantine/core";
 import { Exercise, ExerciseCompletion, Unit } from "./types/exercise.types";
@@ -10,6 +10,9 @@ import ExerciseNode from "./components/path/ExerciseNode";
 import PathHeader from "./components/path/PathHeader";
 import "@mantine/core/styles.css";
 import "./App.css";
+import React from "react";
+import SignUpForm from "./components/auth/SignUpForm";
+import SignInForm from "./components/auth/LoginForm";
 
 const App = () => {
   const [session, setSession] = useState<Session | null>();
@@ -21,70 +24,6 @@ const App = () => {
   const [completionData, setCompletionData] = useState<
     ExerciseCompletion[] | null
   >(null);
-
-  async function handleSignUp(
-    event: FormEvent<HTMLFormElement>,
-  ): Promise<void> {
-    event.preventDefault();
-
-    const nameInput = document.getElementById("name") as HTMLInputElement;
-    const emailInput = document.getElementById("email") as HTMLInputElement;
-    const passwordInput = document.getElementById(
-      "password",
-    ) as HTMLInputElement;
-
-    if (emailInput && passwordInput && nameInput) {
-      // const name: string = nameInput.value; // TODO put name into DB
-      const email: string = emailInput.value;
-      const password: string = passwordInput.value;
-
-      // TODO perform validation
-
-      const { data, error } = await supabase.auth.signUp({
-        email: email,
-        password: password,
-      });
-
-      const { error: signInError } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password,
-      });
-
-      console.log(data);
-      // Update user name by ID in DB
-
-      if (error || signInError) {
-        console.log("Error while signing up user:", error);
-        return;
-      }
-    }
-  }
-
-  async function handleLogin(event: FormEvent<HTMLFormElement>): Promise<void> {
-    event.preventDefault();
-
-    const emailInput = document.getElementById("email") as HTMLInputElement;
-    const passwordInput = document.getElementById(
-      "password",
-    ) as HTMLInputElement;
-
-    if (emailInput && passwordInput) {
-      const email: string = emailInput.value;
-      const password: string = passwordInput.value;
-
-      // TODO perform validation
-
-      const { error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password,
-      });
-
-      if (error) {
-        console.log("Error while signing in user:", error);
-        return;
-      }
-    }
-  }
 
   function toggleSignIn() {
     setSignUp(!signUp);
@@ -107,6 +46,10 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    if (!session) {
+      return;
+    }
+
     const fetchExerciseData = async () => {
       try {
         const { data, error } = await supabase
@@ -182,63 +125,15 @@ const App = () => {
   }, [units, completionData]);
 
   if (!session) {
-    if (signUp) {
-      return (
-        <>
-          <h1 style={{ color: "black" }}>Sign Up</h1>
-          <form onSubmit={handleSignUp}>
-            <label style={{ color: "black" }} htmlFor="name">
-              Name:
-            </label>
-            <input type="text" id="name" name="name" />
-            <br />
-            <br />
-            <label style={{ color: "black" }} htmlFor="email">
-              Email:
-            </label>
-            <input type="email" id="email" name="email" />
-            <br />
-            <br />
-            <label style={{ color: "black" }} htmlFor="password">
-              Password:
-            </label>
-            <input type="password" id="password" name="password" />
-            <br />
-            <br />
-            {/* <label htmlFor="confirmPassword">Confirm Password:</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" /><br/><br/> */}
-            <input type="submit" value="Submit" />
-          </form>
-          <p style={{ color: "black" }} onClick={toggleSignIn}>
-            Already have an account? Sign in.
-          </p>
-        </>
-      );
-    } else {
-      return (
-        <>
-          <h1 style={{ color: "black" }}>Login</h1>
-          <form onSubmit={handleLogin}>
-            <label style={{ color: "black" }} htmlFor="email">
-              Email:
-            </label>
-            <input type="email" id="email" name="email" />
-            <br />
-            <br />
-            <label style={{ color: "black" }} htmlFor="password">
-              Password:
-            </label>
-            <input type="password" id="password" name="password" />
-            <br />
-            <br />
-            <input type="submit" value="Submit" />
-          </form>
-          <p style={{ color: "black" }} onClick={toggleSignIn}>
-            Don't have an account? Sign up.
-          </p>
-        </>
-      );
-    }
+    return (
+      <>
+        {signUp ? (
+          <SignUpForm toggleSignIn={toggleSignIn} />
+        ) : (
+          <SignInForm toggleSignIn={toggleSignIn} />
+        )}
+      </>
+    );
   } else {
     if (error) {
       return <p>An error occurred while trying to load exercise data!</p>;
@@ -253,7 +148,7 @@ const App = () => {
               Object.keys(units)
                 .sort()
                 .map((key) => (
-                  <>
+                  <React.Fragment key={key}>
                     <PathHeader key={key} name={key.replace("_", " ")} />
                     {units[key].map((exercise: Exercise, index: number) => (
                       <ExerciseNode
@@ -262,7 +157,7 @@ const App = () => {
                         index={index}
                       />
                     ))}
-                  </>
+                  </React.Fragment>
                 ))}
           </main>
           <Leaderboard />
