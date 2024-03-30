@@ -10,6 +10,7 @@ import ExerciseNode from "./components/path/ExerciseNode";
 import PathHeader from "./components/path/PathHeader";
 import "@mantine/core/styles.css";
 import "./App.css";
+import React from "react";
 
 const App = () => {
   const [session, setSession] = useState<Session | null>();
@@ -36,11 +37,9 @@ const App = () => {
     ) as HTMLInputElement;
 
     if (emailInput && passwordInput && nameInput) {
-      const name: string = nameInput.value; // TODO put name into DB
+      const name: string = nameInput.value;
       const email: string = emailInput.value;
       const password: string = passwordInput.value;
-
-      // TODO perform validation
 
       const { data, error } = await supabase.auth.signUp({
         email: email,
@@ -124,6 +123,10 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    if (!session) {
+      return;
+    }
+
     const fetchExerciseData = async () => {
       try {
         const { data, error } = await supabase
@@ -286,7 +289,7 @@ const App = () => {
               Object.keys(units)
                 .sort()
                 .map((key) => (
-                  <>
+                  <React.Fragment key={key}>
                     <PathHeader key={key} name={key.replace("_", " ")} />
                     {units[key].map((exercise: Exercise, index: number) => (
                       <ExerciseNode
@@ -295,7 +298,7 @@ const App = () => {
                         index={index}
                       />
                     ))}
-                  </>
+                  </React.Fragment>
                 ))}
           </main>
           <Leaderboard />
