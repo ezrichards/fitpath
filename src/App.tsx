@@ -1,4 +1,4 @@
-import { useState, useEffect, FormEvent } from "react";
+import { useState, useEffect } from "react";
 import { Session } from "@supabase/supabase-js";
 import { MantineProvider } from "@mantine/core";
 import { Exercise, ExerciseCompletion, Unit } from "./types/exercise.types";
@@ -11,6 +11,8 @@ import PathHeader from "./components/path/PathHeader";
 import "@mantine/core/styles.css";
 import "./App.css";
 import React from "react";
+import SignUpForm from "./components/auth/SignUpForm";
+import SignInForm from "./components/auth/LoginForm";
 
 const App = () => {
   const [session, setSession] = useState<Session | null>();
@@ -18,92 +20,13 @@ const App = () => {
   const [error, setError] = useState<string | null>(null);
   const [units, setUnits] = useState<Unit | null>(null);
   const [signUp, setSignUp] = useState(true);
-  const [authError, setAuthError] = useState(false);
-  const [authErrorMessage, setAuthErrorMessage] = useState("");
   const [firstEffectCompleted, setFirstEffectCompleted] = useState(false);
   const [completionData, setCompletionData] = useState<
     ExerciseCompletion[] | null
   >(null);
 
-  async function handleSignUp(
-    event: FormEvent<HTMLFormElement>,
-  ): Promise<void> {
-    event.preventDefault();
-
-    const nameInput = document.getElementById("name") as HTMLInputElement;
-    const emailInput = document.getElementById("email") as HTMLInputElement;
-    const passwordInput = document.getElementById(
-      "password",
-    ) as HTMLInputElement;
-
-    if (emailInput && passwordInput && nameInput) {
-      const name: string = nameInput.value;
-      const email: string = emailInput.value;
-      const password: string = passwordInput.value;
-
-      const { data, error } = await supabase.auth.signUp({
-        email: email,
-        password: password,
-      });
-
-      const { error: signInError } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password,
-      });
-
-      if (data.user) {
-        const { error: updateError } = await supabase
-          .from("user")
-          .update({ name: name })
-          .eq("id", data.user.id);
-
-        if (updateError) {
-          console.log("Error while updating user name:", updateError);
-        }
-      }
-
-      if (error || signInError) {
-        setAuthError(true);
-        setAuthErrorMessage("Please fill in all of the fields!");
-        return;
-      }
-    } else {
-      setAuthError(true);
-      setAuthErrorMessage("Please fill in all of the fields!");
-    }
-  }
-
-  async function handleLogin(event: FormEvent<HTMLFormElement>): Promise<void> {
-    event.preventDefault();
-
-    const emailInput = document.getElementById("email") as HTMLInputElement;
-    const passwordInput = document.getElementById(
-      "password",
-    ) as HTMLInputElement;
-
-    if (emailInput && passwordInput) {
-      const email: string = emailInput.value;
-      const password: string = passwordInput.value;
-
-      const { error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password,
-      });
-
-      if (error) {
-        setAuthError(true);
-        setAuthErrorMessage("Incorrect username or password!");
-        return;
-      }
-    } else {
-      setAuthError(true);
-      setAuthErrorMessage("Please fill in all of the fields!");
-    }
-  }
-
   function toggleSignIn() {
     setSignUp(!signUp);
-    setAuthError(false);
   }
 
   useEffect(() => {
@@ -202,79 +125,15 @@ const App = () => {
   }, [units, completionData]);
 
   if (!session) {
-    if (signUp) {
-      return (
-        <>
-          {authError && <h1>{authErrorMessage}</h1>}
-
-          <h1 style={{ color: "black" }}>Sign Up</h1>
-          <p>
-            Welcome to Fitpath! Please create an account so we can track your
-            progress.
-          </p>
-
-          <form onSubmit={handleSignUp}>
-            <label style={{ color: "black" }} htmlFor="name">
-              Name:
-            </label>
-            <input type="text" id="name" name="name" placeholder="Jane Doe" />
-            <br />
-            <br />
-            <label style={{ color: "black" }} htmlFor="email">
-              Email:
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="jane@example.com"
-            />
-            <br />
-            <br />
-            <label style={{ color: "black" }} htmlFor="password">
-              Password:
-            </label>
-            <input type="password" id="password" name="password" />
-            <br />
-            <br />
-            {/* <label htmlFor="confirmPassword">Confirm Password:</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" /><br/><br/> */}
-            <input type="submit" value="Submit" />
-          </form>
-          <p style={{ color: "black" }} onClick={toggleSignIn}>
-            Already have an account? Sign in.
-          </p>
-        </>
-      );
-    } else {
-      return (
-        <>
-          {authError && <h1>{authErrorMessage}</h1>}
-
-          <h1 style={{ color: "black" }}>Login</h1>
-          <p>Welcome to back to Fitpath!</p>
-
-          <form onSubmit={handleLogin}>
-            <label style={{ color: "black" }} htmlFor="email">
-              Email:
-            </label>
-            <input type="email" id="email" name="email" />
-            <br />
-            <br />
-            <label style={{ color: "black" }} htmlFor="password">
-              Password:
-            </label>
-            <input type="password" id="password" name="password" />
-            <br />
-            <br />
-            <input type="submit" value="Submit" />
-          </form>
-          <p style={{ color: "black" }} onClick={toggleSignIn}>
-            Don't have an account? Sign up.
-          </p>
-        </>
-      );
-    }
+    return (
+      <>
+        {signUp ? (
+          <SignUpForm toggleSignIn={toggleSignIn} />
+        ) : (
+          <SignInForm toggleSignIn={toggleSignIn} />
+        )}
+      </>
+    );
   } else {
     if (error) {
       return <p>An error occurred while trying to load exercise data!</p>;
