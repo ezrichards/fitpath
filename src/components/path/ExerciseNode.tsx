@@ -9,12 +9,10 @@ import "./Path.css";
 const completeExercise = async (exercise_id: number, user_id: string) => {
   const { error } = await supabase
     .from("user_exercise_xref")
-    .update({ complete: true })
-    .eq("user_id", user_id)
-    .eq("exercise_id", exercise_id);
+    .insert({ user_id: user_id, exercise_id: exercise_id, complete: true });
 
   if (error) {
-    console.log("ERROR WHILE UPDATING BACKEND");
+    console.log("Error while completing exercise:", error);
   }
 };
 
