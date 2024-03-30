@@ -1,7 +1,5 @@
 import { useState, useEffect, FormEvent } from "react";
 import { Session } from "@supabase/supabase-js";
-import { Auth } from "@supabase/auth-ui-react";
-import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { MantineProvider } from "@mantine/core";
 import { Exercise, ExerciseCompletion, Unit } from "./types/exercise.types";
 import { supabase } from "./supabase";
@@ -18,68 +16,78 @@ const App = () => {
   const [streak, setStreak] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
   const [units, setUnits] = useState<Unit | null>(null);
+  const [signUp, setSignUp] = useState(true);
   const [firstEffectCompleted, setFirstEffectCompleted] = useState(false);
   const [completionData, setCompletionData] = useState<
     ExerciseCompletion[] | null
   >(null);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
-    event.preventDefault(); // Prevents the default form submission
-  
-    // Retrieve form data
-    const emailInput = document.getElementById('email') as HTMLInputElement;
-    const passwordInput = document.getElementById('password') as HTMLInputElement;
-    
-    // Check if inputs are not null (optional)
+  async function handleSignUp(
+    event: FormEvent<HTMLFormElement>,
+  ): Promise<void> {
+    event.preventDefault();
+
+    const nameInput = document.getElementById("name") as HTMLInputElement;
+    const emailInput = document.getElementById("email") as HTMLInputElement;
+    const passwordInput = document.getElementById(
+      "password",
+    ) as HTMLInputElement;
+
+    if (emailInput && passwordInput && nameInput) {
+      // const name: string = nameInput.value; // TODO put name into DB
+      const email: string = emailInput.value;
+      const password: string = passwordInput.value;
+
+      // TODO perform validation
+
+      const { data, error } = await supabase.auth.signUp({
+        email: email,
+        password: password,
+      });
+
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      });
+
+      console.log(data);
+      // Update user name by ID in DB
+
+      if (error || signInError) {
+        console.log("Error while signing up user:", error);
+        return;
+      }
+    }
+  }
+
+  async function handleLogin(event: FormEvent<HTMLFormElement>): Promise<void> {
+    event.preventDefault();
+
+    const emailInput = document.getElementById("email") as HTMLInputElement;
+    const passwordInput = document.getElementById(
+      "password",
+    ) as HTMLInputElement;
+
     if (emailInput && passwordInput) {
       const email: string = emailInput.value;
       const password: string = passwordInput.value;
-  
-      // Perform any processing you need here, such as validation or sending data to a server
-  
-      // Example: Output the values to console
-      console.log('Email:', email);
-      console.log('Password:', password);
-  
-      // Optionally, you can redirect the user or perform other actions
+
+      // TODO perform validation
+
+      const { error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      });
+
+      if (error) {
+        console.log("Error while signing in user:", error);
+        return;
+      }
     }
-  }  
-
-  async function signUpNewUser(email: string, password: string) {
-    const { data, error } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-      // options: {
-      //   emailRedirectTo: 'https://example.com/welcome',
-      // },
-    })
-
-    if(error) {
-      console.log("error while signing up user")
-    }
-
-    console.log('user signed up:', data)
   }
 
-  async function signInWithEmail(email: string, password: string) {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    })
-
-    if(error) {
-      console.log('error while signing in user')
-    }
-
-    console.log('user signed in: ', data)
-  }
-
-  async function signOut() {
-    const { error } = await supabase.auth.signOut()
-
-    if(error) {
-      console.log('error while signing out user')
-    }
+  function toggleSignIn() {
+    setSignUp(!signUp);
   }
 
   useEffect(() => {
@@ -174,24 +182,63 @@ const App = () => {
   }, [units, completionData]);
 
   if (!session) {
-    return (
-      // <Auth
-      //   supabaseClient={supabase}
-      //   appearance={{ theme: ThemeSupa }}
-      //   providers={[]}
-      // />
-
-      <>
-        <h1>Login</h1>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="email">Email:</label>
-          <input type="text" id="email" name="email" /><br/><br/>
-          <label htmlFor="password">Password:</label>
-          <input type="text" id="password" name="password" /><br/><br/>
-          <input type="submit" value="Submit" />
-        </form>
-      </>
-    );
+    if (signUp) {
+      return (
+        <>
+          <h1 style={{ color: "black" }}>Sign Up</h1>
+          <form onSubmit={handleSignUp}>
+            <label style={{ color: "black" }} htmlFor="name">
+              Name:
+            </label>
+            <input type="text" id="name" name="name" />
+            <br />
+            <br />
+            <label style={{ color: "black" }} htmlFor="email">
+              Email:
+            </label>
+            <input type="email" id="email" name="email" />
+            <br />
+            <br />
+            <label style={{ color: "black" }} htmlFor="password">
+              Password:
+            </label>
+            <input type="password" id="password" name="password" />
+            <br />
+            <br />
+            {/* <label htmlFor="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" /><br/><br/> */}
+            <input type="submit" value="Submit" />
+          </form>
+          <p style={{ color: "black" }} onClick={toggleSignIn}>
+            Already have an account? Sign in.
+          </p>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <h1 style={{ color: "black" }}>Login</h1>
+          <form onSubmit={handleLogin}>
+            <label style={{ color: "black" }} htmlFor="email">
+              Email:
+            </label>
+            <input type="email" id="email" name="email" />
+            <br />
+            <br />
+            <label style={{ color: "black" }} htmlFor="password">
+              Password:
+            </label>
+            <input type="password" id="password" name="password" />
+            <br />
+            <br />
+            <input type="submit" value="Submit" />
+          </form>
+          <p style={{ color: "black" }} onClick={toggleSignIn}>
+            Don't have an account? Sign up.
+          </p>
+        </>
+      );
+    }
   } else {
     if (error) {
       return <p>An error occurred while trying to load exercise data!</p>;
