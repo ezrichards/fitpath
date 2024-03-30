@@ -17,6 +17,8 @@ const App = () => {
   const [error, setError] = useState<string | null>(null);
   const [units, setUnits] = useState<Unit | null>(null);
   const [signUp, setSignUp] = useState(true);
+  const [authError, setAuthError] = useState(false);
+  const [authErrorMessage, setAuthErrorMessage] = useState("");
   const [firstEffectCompleted, setFirstEffectCompleted] = useState(false);
   const [completionData, setCompletionData] = useState<
     ExerciseCompletion[] | null
@@ -62,9 +64,13 @@ const App = () => {
       }
 
       if (error || signInError) {
-        console.log("Error while signing up user:", error);
+        setAuthError(true);
+        setAuthErrorMessage("Please fill in all of the fields!");
         return;
       }
+    } else {
+      setAuthError(true);
+      setAuthErrorMessage("Please fill in all of the fields!");
     }
   }
 
@@ -80,22 +86,25 @@ const App = () => {
       const email: string = emailInput.value;
       const password: string = passwordInput.value;
 
-      // TODO perform validation
-
       const { error } = await supabase.auth.signInWithPassword({
         email: email,
         password: password,
       });
 
       if (error) {
-        console.log("Error while signing in user:", error);
+        setAuthError(true);
+        setAuthErrorMessage("Incorrect username or password!");
         return;
       }
+    } else {
+      setAuthError(true);
+      setAuthErrorMessage("Please fill in all of the fields!");
     }
   }
 
   function toggleSignIn() {
     setSignUp(!signUp);
+    setAuthError(false);
   }
 
   useEffect(() => {
@@ -193,18 +202,30 @@ const App = () => {
     if (signUp) {
       return (
         <>
+          {authError && <h1>{authErrorMessage}</h1>}
+
           <h1 style={{ color: "black" }}>Sign Up</h1>
+          <p>
+            Welcome to Fitpath! Please create an account so we can track your
+            progress.
+          </p>
+
           <form onSubmit={handleSignUp}>
             <label style={{ color: "black" }} htmlFor="name">
               Name:
             </label>
-            <input type="text" id="name" name="name" />
+            <input type="text" id="name" name="name" placeholder="Jane Doe" />
             <br />
             <br />
             <label style={{ color: "black" }} htmlFor="email">
               Email:
             </label>
-            <input type="email" id="email" name="email" />
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="jane@example.com"
+            />
             <br />
             <br />
             <label style={{ color: "black" }} htmlFor="password">
@@ -225,7 +246,11 @@ const App = () => {
     } else {
       return (
         <>
+          {authError && <h1>{authErrorMessage}</h1>}
+
           <h1 style={{ color: "black" }}>Login</h1>
+          <p>Welcome to back to Fitpath!</p>
+
           <form onSubmit={handleLogin}>
             <label style={{ color: "black" }} htmlFor="email">
               Email:
