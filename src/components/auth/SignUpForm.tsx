@@ -62,11 +62,11 @@ const SignUpForm = (props: { toggleSignIn: () => void }) => {
         progress.
       </p>
 
-      {authError && 
+      {authError && (
         <div className="errorContainer">
           <p>{authErrorMessage}</p>
         </div>
-      }
+      )}
 
       <form onSubmit={handleSignUp}>
         <label style={{ color: "black" }} htmlFor="name">
