@@ -34,7 +34,7 @@ const App = () => {
     ) as HTMLInputElement;
 
     if (emailInput && passwordInput && nameInput) {
-      // const name: string = nameInput.value; // TODO put name into DB
+      const name: string = nameInput.value; // TODO put name into DB
       const email: string = emailInput.value;
       const password: string = passwordInput.value;
 
@@ -50,8 +50,16 @@ const App = () => {
         password: password,
       });
 
-      console.log(data);
-      // Update user name by ID in DB
+      if (data.user) {
+        const { error: updateError } = await supabase
+          .from("user")
+          .update({ name: name })
+          .eq("id", data.user.id);
+
+        if (updateError) {
+          console.log("Error while updating user name:", updateError);
+        }
+      }
 
       if (error || signInError) {
         console.log("Error while signing up user:", error);
