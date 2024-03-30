@@ -56,13 +56,17 @@ const SignUpForm = (props: { toggleSignIn: () => void }) => {
 
   return (
     <div className="authContainer">
-      {authError && <h1>{authErrorMessage}</h1>}
-
       <h1 style={{ color: "black" }}>Sign Up</h1>
       <p className="subHeader">
         Welcome to Fitpath! Please create an account so we can track your
         progress.
       </p>
+
+      {authError && 
+        <div className="errorContainer">
+          <p>{authErrorMessage}</p>
+        </div>
+      }
 
       <form onSubmit={handleSignUp}>
         <label style={{ color: "black" }} htmlFor="name">

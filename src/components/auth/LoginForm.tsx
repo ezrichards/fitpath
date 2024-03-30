@@ -36,11 +36,15 @@ const SignInForm = (props: { toggleSignIn: () => void }) => {
 
   return (
     <div className="authContainer">
-      {authError && <h1>{authErrorMessage}</h1>}
-
       <h1>Login</h1>
       <p className="subHeader">Welcome to back to Fitpath!</p>
 
+      {authError && 
+        <div className="errorContainer">
+          <p>{authErrorMessage}</p>
+        </div>
+      }
+      
       <form onSubmit={handleLogin}>
         <label htmlFor="email">Email:</label>
         <input

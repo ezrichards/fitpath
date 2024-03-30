@@ -13,8 +13,10 @@ h1 {
 
 .errorContainer {
   background-color: lightpink;
-  border: 1px solid lightpink;
+  border: 2px solid lightpink;
   color: darkred;
+  text-align: center;
+  margin-bottom: 3%;
 }
 
 .authContainer {
