@@ -19,11 +19,6 @@ const completeExercise = async (exercise_id: number, user_id: string) => {
 const ExerciseNode = (props: { exercise: Exercise; index: number }) => {
   const [opened, { open, close }] = useDisclosure(false);
   const [completed, setCompleted] = useState(false);
-  const baseMargin = 50;
-  const marginLeft =
-    (props.index % 6 <= 2 ? props.index % 6 : 6 - (props.index % 6)) *
-      baseMargin +
-    50;
 
   useEffect(() => {
     setCompleted(props.exercise.completed);
@@ -63,20 +58,26 @@ const ExerciseNode = (props: { exercise: Exercise; index: number }) => {
         </button>
       </Modal>
 
-      <button
-        style={{
-          marginLeft: `${marginLeft}px`,
-        }}
-        className={completed ? "completedNode" : "node"}
-        id={props.exercise.name}
-        onClick={open}
-      >
-        {completed ? (
-          <FaCheck size={50} fill="white" />
-        ) : (
-          <FaStar size={50} fill="white" />
-        )}
-      </button>
+      <div className="nodeDescription">
+        <button
+          className={`${completed ? "completedNode" : "node"} ${props.index % 2 === 0 ? "left" : "right"}`}
+          id={props.exercise.name}
+          onClick={open}
+        >
+          {completed ? (
+            <FaCheck size={50} fill="white" />
+          ) : (
+            <FaStar size={50} fill="white" />
+          )}
+        </button>
+
+        <div
+          className={`descriptionParagraphs ${props.index % 2 === 0 ? "leftParagraph" : "rightParagraph"}`}
+        >
+          <p className="exerciseName">{props.exercise.name}</p>
+          <p>{props.exercise.description}</p>
+        </div>
+      </div>
     </>
   );
 };

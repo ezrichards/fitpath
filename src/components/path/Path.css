@@ -67,3 +67,37 @@
 .description {
   margin-bottom: 5%;
 }
+
+.left {
+  margin-right: auto;
+}
+
+.right {
+  order: 1;
+  margin-left: auto;
+}
+
+.nodeDescription {
+  border-radius: 75px;
+  background-color: white;
+  width: 100%;
+  display: flex;
+  margin-bottom: 15px;
+  max-height: 95px;
+}
+
+.descriptionParagraphs {
+  padding: 15px;
+  flex-direction: column;
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.exerciseName {
+  font-weight: bold;
+}
+
+.rightParagraph {
+  margin-left: 10%;
+}
