@@ -58,11 +58,10 @@ const ExerciseNode = (props: { exercise: Exercise; index: number }) => {
         </button>
       </Modal>
 
-      <div className="nodeDescription">
+      <div className="nodeDescription" onClick={open}>
         <button
           className={`${completed ? "completedNode" : "node"} ${props.index % 2 === 0 ? "left" : "right"}`}
           id={props.exercise.name}
-          onClick={open}
         >
           {completed ? (
             <FaCheck size={50} fill="white" />
