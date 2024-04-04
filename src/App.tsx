@@ -26,17 +26,17 @@ const App = () => {
     ExerciseCompletion[] | null
   >(null);
 
-  const dailyTasks = [
-    {
-      name: "Dumbbell Curls",
-    },
-    {
-      name: "Dumbbell Shrugs",
-    },
-    {
-      name: "Pushups",
-    },
-  ];
+  // const dailyTasks = [
+  //   {
+  //     name: "Dumbbell Curls",
+  //   },
+  //   {
+  //     name: "Dumbbell Shrugs",
+  //   },
+  //   {
+  //     name: "Pushups",
+  //   },
+  // ];
 
   function toggleSignIn() {
     setSignUp(!signUp);
