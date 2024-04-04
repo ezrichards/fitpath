@@ -6,6 +6,7 @@ export interface Exercise {
   recommendations: string;
   gif: string;
   unit: string;
+  equipment: number;
 }
 
 export interface Unit {
