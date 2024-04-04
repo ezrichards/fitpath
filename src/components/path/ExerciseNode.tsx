@@ -58,9 +58,14 @@ const ExerciseNode = (props: { exercise: Exercise; index: number }) => {
         </button>
       </Modal>
 
-      <div className="nodeDescription" onClick={open}>
+      <div
+        className={`nodeDescription ${completed ? "completedDescription" : ""}`}
+        onClick={open}
+      >
         <button
-          className={`${completed ? "completedNode" : "node"} ${props.index % 2 === 0 ? "left" : "right"}`}
+          className={`${completed ? "completedNode" : "node"} ${
+            props.index % 2 === 0 ? "left" : "right"
+          }`}
           id={props.exercise.name}
         >
           {completed ? (
@@ -71,7 +76,9 @@ const ExerciseNode = (props: { exercise: Exercise; index: number }) => {
         </button>
 
         <div
-          className={`descriptionParagraphs ${props.index % 2 === 0 ? "leftParagraph" : "rightParagraph"}`}
+          className={`descriptionParagraphs ${
+            props.index % 2 === 0 ? "leftParagraph" : "rightParagraph"
+          }`}
         >
           <p className="exerciseName">{props.exercise.name}</p>
           <p>{props.exercise.description}</p>

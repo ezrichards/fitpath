@@ -64,6 +64,10 @@
   margin-bottom: 7.5%;
 }
 
+.completedDescription {
+  /* border: 4px solid #51d103; */
+}
+
 .description {
   margin-bottom: 5%;
 }
@@ -100,4 +104,25 @@
 
 .rightParagraph {
   margin-left: 10%;
+}
+
+.tasks {
+  background-color: white;
+  border-radius: 15px;
+}
+
+.tasksHeader {
+  background-color: #5158bb;
+  border-radius: 15px;
+  text-align: center;
+  color: white;
+  padding: 10px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.tasksDescription {
+  border-radius: 15px;
+  padding: 20px;
+  font-size: 18px;
 }

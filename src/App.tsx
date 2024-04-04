@@ -18,12 +18,25 @@ const App = () => {
   const [session, setSession] = useState<Session | null>();
   const [streak, setStreak] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [units, setUnits] = useState<Unit | null>(null);
   const [signUp, setSignUp] = useState(true);
   const [firstEffectCompleted, setFirstEffectCompleted] = useState(false);
   const [completionData, setCompletionData] = useState<
     ExerciseCompletion[] | null
   >(null);
+
+  const dailyTasks = [
+    {
+      name: "Dumbbell Curls",
+    },
+    {
+      name: "Dumbbell Shrugs",
+    },
+    {
+      name: "Pushups",
+    },
+  ];
 
   function toggleSignIn() {
     setSignUp(!signUp);
@@ -51,6 +64,26 @@ const App = () => {
     }
 
     const fetchExerciseData = async () => {
+      // TODO move this somewhere cleaner later
+      try {
+        const { data, error } = await supabase
+          .from("user")
+          .select()
+          .eq("id", session.user.id)
+          .returns<User[]>();
+
+        if (error) {
+          console.log("Error querying user data");
+        }
+
+        if (data) {
+          console.log("RECEIVED USER:", data[0]);
+          setUser(data[0]);
+        }
+      } catch (error: any) {
+        setError(error);
+      }
+
       try {
         const { data, error } = await supabase
           .from("exercise")
@@ -121,7 +154,12 @@ const App = () => {
         });
       }
     };
+
+    const fetchUserTasks = async () => {
+      // get random tasks OR return first three if none
+    };
     fetchData();
+    fetchUserTasks();
   }, [units, completionData]);
 
   if (!session) {
@@ -144,6 +182,25 @@ const App = () => {
         <div className="app">
           <Header streak={streak} />
           <main>
+            <div className="tasks">
+              <div className="tasksHeader">
+                {/* <p>Your Daily Tasks</p> */}
+                <p>Fitpath</p>
+              </div>
+
+              <div className="tasksDescription">
+                Welcome back, <strong>{user && user.name}</strong>! You're on a{" "}
+                {streak} day streak.
+                {/* <br /> */}
+                {/* <br /> */}
+                {/* {dailyTasks.map((task) => (
+                  <>
+                    <p>{task.name}</p>
+                  </>
+                ))} */}
+              </div>
+            </div>
+
             {units &&
               Object.keys(units)
                 .sort()
