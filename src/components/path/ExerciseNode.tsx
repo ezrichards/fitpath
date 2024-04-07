@@ -7,12 +7,27 @@ import { useEffect, useState } from "react";
 import "./Path.css";
 
 const completeExercise = async (exercise_id: number, user_id: string) => {
-  const { error } = await supabase
+  const { data: redo, error: redoError } = await supabase
     .from("user_exercise_xref")
-    .insert({ user_id: user_id, exercise_id: exercise_id, complete: true });
+    .select()
+    .eq("user_id", user_id)
+    .eq("exercise_id", exercise_id)
+    .returns<any>(); // hackish solution for now
 
-  if (error) {
-    console.log("Error while completing exercise:", error);
+  if (redoError) {
+    console.log("Error while getting completion data:", redoError);
+  }
+
+  if (redo) {
+    const { error } = await supabase
+      .from("user_exercise_xref")
+      .update({ complete: true, redo: redo[0].redo + 1 })
+      .eq("user_id", user_id)
+      .eq("exercise_id", exercise_id);
+
+    if (error) {
+      console.log("Error while completing exercise:", error);
+    }
   }
 };
 
