@@ -26,6 +26,12 @@ p {
   margin: 0;
 }
 
+.bottomInfo {
+  text-align: center;
+  margin-bottom: 7.5%;
+  color: darkslategray;
+}
+
 /* Mobile Stuff */
 @media (min-width: 768px) {
   .app {

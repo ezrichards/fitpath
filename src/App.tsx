@@ -42,6 +42,10 @@ const App = () => {
     setSignUp(!signUp);
   }
 
+  async function logout() {
+    await supabase.auth.signOut();
+  }
+
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSession(session);
@@ -216,6 +220,13 @@ const App = () => {
                     ))}
                   </React.Fragment>
                 ))}
+
+            <p className="bottomInfo">
+              <a href="https://forms.gle/k4HKig7AXiFf1hVC6" target="_blank">
+                Feedback?
+              </a>{" "}
+              | <a onClick={logout}>Logout</a>
+            </p>
           </main>
           <Leaderboard />
         </div>
