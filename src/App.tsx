@@ -69,7 +69,7 @@ const App = () => {
 
     const fetchExerciseData = async () => {
       try {
-        const { data: userData, error: _ } = await supabase
+        const { data: userData } = await supabase
           .from("user")
           .select()
           .eq("id", session.user.id)
