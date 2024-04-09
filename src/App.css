@@ -11,7 +11,6 @@ body {
 }
 
 main {
-  /* TODO: fix sticky header */
   margin-top: 75px;
   display: flex;
   flex-direction: column;

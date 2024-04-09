@@ -1,5 +1,19 @@
 .node {
-  background-color: #51d103;
+  background-color: white;
+  border-radius: 75px;
+  color: white;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 5px #939393;
+  margin-bottom: 10px;
+}
+
+.completedNode {
+  background-color: white;
+  border: 4px solid #51d103;
   border-radius: 75px;
   color: white;
   width: 90px;
@@ -11,17 +25,8 @@
   margin-bottom: 10px;
 }
 
-.completedNode {
-  background-color: #ffd700;
-  border-radius: 75px;
-  color: white;
-  width: 90px;
-  height: 90px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0px 5px #c28306;
-  margin-bottom: 10px;
+.logoEmoji {
+  font-size: 40px;
 }
 
 .node :active {
@@ -64,10 +69,6 @@
   margin-bottom: 7.5%;
 }
 
-.completedDescription {
-  /* border: 4px solid #51d103; */
-}
-
 .description {
   margin-bottom: 5%;
 }
@@ -83,7 +84,7 @@
 
 .nodeDescription {
   border-radius: 75px;
-  background-color: white;
+  background-color: #d9d9d9;
   width: 100%;
   display: flex;
   margin-bottom: 15px;

@@ -1,4 +1,3 @@
-import { FaCheck, FaStar } from "react-icons/fa";
 import { Exercise } from "../../types/exercise.types";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal } from "@mantine/core";
@@ -73,21 +72,20 @@ const ExerciseNode = (props: { exercise: Exercise; index: number }) => {
         </button>
       </Modal>
 
-      <div
-        className={`nodeDescription ${completed ? "completedDescription" : ""}`}
-        onClick={open}
-      >
+      <div className="nodeDescription" onClick={open}>
         <button
           className={`${completed ? "completedNode" : "node"} ${
             props.index % 2 === 0 ? "left" : "right"
           }`}
           id={props.exercise.name}
         >
-          {completed ? (
-            <FaCheck size={50} fill="white" />
-          ) : (
-            <FaStar size={50} fill="white" />
-          )}
+          <>
+            {props.exercise.equipment === 0 ? (
+              <span className="logoEmoji">💪</span>
+            ) : (
+              <span className="logoEmoji">🏋️</span>
+            )}
+          </>
         </button>
 
         <div

@@ -68,34 +68,25 @@ const App = () => {
     }
 
     const fetchExerciseData = async () => {
-      // TODO move this somewhere cleaner later
       try {
-        const { data, error } = await supabase
+        const { data: userData, error: _ } = await supabase
           .from("user")
           .select()
           .eq("id", session.user.id)
           .returns<User[]>();
 
-        if (error) {
-          console.log("Error querying user data");
+        if (userData) {
+          setUser(userData[0]);
+          setStreak(userData[0].streak_current);
         }
 
-        if (data) {
-          console.log("RECEIVED USER:", data[0]);
-          setUser(data[0]);
-        }
-      } catch (error: any) {
-        setError(error);
-      }
-
-      try {
         const { data, error } = await supabase
           .from("exercise")
           .select()
           .returns<Exercise[]>();
 
         if (error) {
-          console.log("ERROR WHILE QUERYING BACKEND");
+          console.log("Error while querying exercises..");
         }
 
         const tempUnits: Unit = {} as Unit;
@@ -117,20 +108,6 @@ const App = () => {
         }
 
         setCompletionData(completionData as ExerciseCompletion[]);
-
-        const { data: userData, error: userError } = await supabase
-          .from("user")
-          .select()
-          .eq("id", String(session?.user.id))
-          .returns<User[]>();
-
-        if (userError) {
-          console.log("error in querying users!", userError);
-        }
-
-        if (userData) {
-          setStreak(userData[0].streak_current);
-        }
       } catch (error: any) {
         setError(error);
       }
